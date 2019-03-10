@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.liezi.modules.system.dao.LogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.liezi.modules.system.entity.Log">
+        <id column="id" property="id" />
+    <result column="create_dt" property="createDt" />
+    <result column="update_dt" property="updateDt" />
+    <result column="create_by" property="createBy" />
+    <result column="update_by" property="updateBy" />
+    <result column="delete_flag" property="deleteFlag" />
+        <result column="username" property="username" />
+        <result column="operation" property="operation" />
+        <result column="method" property="method" />
+        <result column="params" property="params" />
+        <result column="request_time" property="requestTime" />
+        <result column="ip" property="ip" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_dt,
+        update_dt,
+        create_by,
+        update_by,
+        delete_flag,
+        id, username, operation, method, params, request_time, ip
+    </sql>
+
+</mapper>
