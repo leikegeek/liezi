@@ -3,6 +3,10 @@ package org.liezi.modules.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
 import org.liezi.common.utils.StringUtils;
@@ -12,10 +16,6 @@ import org.liezi.common.validator.ValidatorUpdateGroup;
 import org.liezi.modules.common.service.IGeneratorIDService;
 import org.liezi.modules.system.entity.Menu;
 import org.liezi.modules.system.service.IMenuService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 /**
  * @author: lake.lei
- * @date: 2019-03-05
+ * @date: 2019-03-13
  * @description:菜单管理控制类
  */
 @Controller
@@ -44,7 +44,7 @@ public class MenuController {
 
     @ApiOperation(value = "新增菜单管理", notes = "新增菜单管理")
     @ApiImplicitParams({
-      @ApiImplicitParam(paramType = "query",name = "parentId", value = "父菜单ID，一级菜单为0", dataType ="String"),
+      @ApiImplicitParam(paramType = "query",name = "parentId", value = "父菜单ID，一级菜单为0", dataType ="Long"),
       @ApiImplicitParam(paramType = "query",name = "name", value = "菜单名称", dataType ="String"),
       @ApiImplicitParam(paramType = "query",name = "url", value = "菜单URL", dataType ="String"),
       @ApiImplicitParam(paramType = "query",name = "perms", value = "授权(多个用逗号分隔，如：user:list,user:create)", dataType ="String"),
@@ -61,7 +61,7 @@ public class MenuController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        menu.setId(generatorIDService.generatorStringID());
+        menu.setMenuId(generatorIDService.generatorLongID());
         addFlag = menuService.save(menu);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,menu);
@@ -99,7 +99,7 @@ public class MenuController {
             }
         }
         IPage<Menu> menuList=menuService.page(
-            new Page<>(menu.getCurrent(), menu.getSize()),
+            new Page<Menu>(menu.getCurrent(), menu.getSize()),
             new QueryWrapper<Menu>()
             .orderByDesc(true, StringUtils.entityFieldToDB(menu.getDescs()))
             .orderByAsc(true,StringUtils.entityFieldToDB(menu.getAscs()))

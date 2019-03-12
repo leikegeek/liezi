@@ -3,19 +3,16 @@ package org.liezi.modules.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
 import org.liezi.common.utils.StringUtils;
-import org.liezi.common.validator.ValidatorAddGroup;
 import org.liezi.common.validator.ValidatorPageGroup;
 import org.liezi.common.validator.ValidatorUpdateGroup;
 import org.liezi.modules.common.service.IGeneratorIDService;
 import org.liezi.modules.system.entity.ScheduleLog;
 import org.liezi.modules.system.service.IScheduleLogService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -42,35 +39,6 @@ public class ScheduleLogController {
   @Autowired
   private IGeneratorIDService generatorIDService;
 
-    @ApiOperation(value = "新增定时任务日志", notes = "新增定时任务日志")
-    @ApiImplicitParams({
-      @ApiImplicitParam(paramType = "query",name = "id", value = "任务日志id", dataType ="String"),
-      @ApiImplicitParam(paramType = "query",name = "jobId", value = "任务id", dataType ="String"),
-      @ApiImplicitParam(paramType = "query",name = "beanName", value = "spring bean名称", dataType ="String"),
-      @ApiImplicitParam(paramType = "query",name = "methodName", value = "方法名", dataType ="String"),
-      @ApiImplicitParam(paramType = "query",name = "params", value = "参数", dataType ="String"),
-      @ApiImplicitParam(paramType = "query",name = "status", value = "任务状态    0：成功    1：失败", dataType ="Integer"),
-      @ApiImplicitParam(paramType = "query",name = "error", value = "失败信息", dataType ="String"),
-      @ApiImplicitParam(paramType = "query",name = "times", value = "耗时(单位：毫秒)", dataType ="Integer"),
-    })
-    @PostMapping("/add")
-    @ResponseBody
-    public ReturnEntity add(@RequestBody @Validated(value= ValidatorAddGroup.class) ScheduleLog scheduleLog, BindingResult result){
-        boolean addFlag ;
-        if(result.hasErrors()){
-            for (ObjectError error : result.getAllErrors()) {
-               return ResultObject.warning(error.getDefaultMessage(),null);
-            }
-        }
-        scheduleLog.setLogId(generatorIDService.generatorLongID());
-        addFlag = scheduleLogService.save(scheduleLog);
-        if(addFlag){
-             return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,scheduleLog);
-        }else{
-             return ResultObject.error(ReturnEntity.ADD_FAIL_MSG,null);
-        }
-
-    }
 
     @ApiOperation(value = "更新定时任务日志", notes = "更新定时任务日志")
     @PostMapping("/update")

@@ -1,13 +1,12 @@
 package org.liezi.modules.system.entity;
 
-import org.liezi.base.SuperEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-
+import org.liezi.base.SuperEntity;
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-05
+ * @date: 2019-03-13
  * @description:系统配置信息表实体类
  */
 @TableName("system_config")
@@ -15,7 +14,7 @@ public class Config extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private Long configId;
     /**
      * key
      */
@@ -34,12 +33,12 @@ public class Config extends SuperEntity implements Serializable{
     private String remark;
 
 
-    public String getId() {
-        return id;
+    public Long getConfigId() {
+        return configId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setConfigId(Long configId) {
+        this.configId = configId;
     }
 
     public String getParamKey() {
@@ -77,7 +76,7 @@ public class Config extends SuperEntity implements Serializable{
     @Override
     public String toString() {
         return "Config{" +
-        ", id=" + id +
+        ", configId=" + configId +
         ", paramKey=" + paramKey +
         ", paramValue=" + paramValue +
         ", status=" + status +

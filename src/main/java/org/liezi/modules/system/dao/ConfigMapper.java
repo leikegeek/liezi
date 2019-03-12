@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-05
+ * @date: 2019-03-13
  * @description:系统配置信息表 Mapper接口
  */
 @Component(value = "configMapper")

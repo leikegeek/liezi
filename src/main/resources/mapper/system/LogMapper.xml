@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.liezi.modules.system.entity.Log">
-        <id column="id" property="id" />
+        <id column="log_id" property="logId" />
     <result column="create_dt" property="createDt" />
     <result column="update_dt" property="updateDt" />
     <result column="create_by" property="createBy" />
@@ -14,7 +14,7 @@
         <result column="operation" property="operation" />
         <result column="method" property="method" />
         <result column="params" property="params" />
-        <result column="request_time" property="requestTime" />
+        <result column="time" property="time" />
         <result column="ip" property="ip" />
     </resultMap>
 
@@ -25,7 +25,7 @@
         create_by,
         update_by,
         delete_flag,
-        id, username, operation, method, params, request_time, ip
+        log_id, username, operation, method, params, time, ip
     </sql>
 
 </mapper>

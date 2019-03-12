@@ -3,15 +3,16 @@ package org.liezi.modules.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
 import org.liezi.common.utils.StringUtils;
 import org.liezi.common.validator.ValidatorPageGroup;
 import org.liezi.common.validator.ValidatorUpdateGroup;
+import org.liezi.modules.common.service.IGeneratorIDService;
 import org.liezi.modules.system.entity.Log;
 import org.liezi.modules.system.service.ILogService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,10 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-
 /**
  * @author: lake.lei
- * @date: 2019-02-27
+ * @date: 2019-03-13
  * @description:系统日志控制类
  */
 @Controller
@@ -36,6 +36,8 @@ public class LogController {
 
   @Autowired
   private ILogService logService;
+  @Autowired
+  private IGeneratorIDService generatorIDService;
 
     @ApiOperation(value = "更新系统日志", notes = "更新系统日志")
     @PostMapping("/update")
@@ -85,6 +87,17 @@ public class LogController {
         return ResultObject.success("success",logList);
     }
 
+    @ApiOperation(value = "删除系统日志", notes = "删除系统日志")
+    @PostMapping("/delete")
+    @ResponseBody
+    public ReturnEntity delete(@RequestBody String id){
+        boolean deleteFlag = logService.removeById(id);
+        if(deleteFlag){
+            return ResultObject.success(ReturnEntity.DELETE_SUCCESS_MSG,null);
+        }else{
+            return ResultObject.error(ReturnEntity.DELETE_FAIL_MSG,null);
+        }
+    }
 
 }
 

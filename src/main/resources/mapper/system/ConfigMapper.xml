@@ -4,11 +4,11 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.liezi.modules.system.entity.Config">
-        <id column="id" property="id" />
-    <result column="create_by" property="createBy" />
-    <result column="update_by" property="updateBy" />
+        <id column="config_id" property="configId" />
     <result column="create_dt" property="createDt" />
     <result column="update_dt" property="updateDt" />
+    <result column="create_by" property="createBy" />
+    <result column="update_by" property="updateBy" />
     <result column="delete_flag" property="deleteFlag" />
         <result column="param_key" property="paramKey" />
         <result column="param_value" property="paramValue" />
@@ -18,12 +18,12 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        create_by,
-        update_by,
         create_dt,
         update_dt,
+        create_by,
+        update_by,
         delete_flag,
-        id, param_key, param_value, status, remark
+        config_id, param_key, param_value, status, remark
     </sql>
 
 </mapper>

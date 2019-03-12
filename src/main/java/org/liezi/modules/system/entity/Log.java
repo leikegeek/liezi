@@ -1,21 +1,21 @@
 package org.liezi.modules.system.entity;
 
-import org.liezi.base.SuperEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.liezi.base.SuperEntity;
 
 import java.io.Serializable;
-
 /**
  *
  * @author: lake.lei
- * @date: 2019-02-27
+ * @date: 2019-03-13
  * @description:系统日志实体类
  */
 @TableName("system_log")
-public class Log extends SuperEntity implements Serializable {
+public class Log extends SuperEntity implements Serializable{
 
-    private static final long serialVersionUID = -30318569891334523L;
-    private String id;
+    private static final long serialVersionUID = 1L;
+
+    private Long logId;
     /**
      * 用户名
      */
@@ -35,27 +35,19 @@ public class Log extends SuperEntity implements Serializable {
     /**
      * 执行时长(毫秒)
      */
-    private long requestTime;
+    private Long time;
     /**
      * IP地址
      */
     private String ip;
-    /**
-     * 请求状态 0 未完成 1已完成 2失败
-     */
-    private Integer requestStatus;
-    /**
-     * 返回提示信息
-     */
-    private String returnMessage;
 
 
-    public String getId() {
-        return id;
+    public Long getLogId() {
+        return logId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setLogId(Long logId) {
+        this.logId = logId;
     }
 
     public String getUsername() {
@@ -90,12 +82,12 @@ public class Log extends SuperEntity implements Serializable {
         this.params = params;
     }
 
-    public long getRequestTime() {
-        return requestTime;
+    public Long getTime() {
+        return time;
     }
 
-    public void setRequestTime(long requestTime) {
-        this.requestTime = requestTime;
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     public String getIp() {
@@ -106,34 +98,16 @@ public class Log extends SuperEntity implements Serializable {
         this.ip = ip;
     }
 
-    public Integer getRequestStatus() {
-        return requestStatus;
-    }
-
-    public void setRequestStatus(Integer requestStatus) {
-        this.requestStatus = requestStatus;
-    }
-
-    public String getReturnMessage() {
-        return returnMessage;
-    }
-
-    public void setReturnMessage(String returnMessage) {
-        this.returnMessage = returnMessage;
-    }
-
     @Override
     public String toString() {
         return "Log{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", operation='" + operation + '\'' +
-                ", method='" + method + '\'' +
-                ", params='" + params + '\'' +
-                ", requestTime=" + requestTime +
-                ", ip='" + ip + '\'' +
-                ", requestStatus=" + requestStatus +
-                ", returnMessage='" + returnMessage + '\'' +
-                '}';
+        ", logId=" + logId +
+        ", username=" + username +
+        ", operation=" + operation +
+        ", method=" + method +
+        ", params=" + params +
+        ", time=" + time +
+        ", ip=" + ip +
+        "}";
     }
 }

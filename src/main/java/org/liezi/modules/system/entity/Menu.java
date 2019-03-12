@@ -1,13 +1,13 @@
 package org.liezi.modules.system.entity;
 
-import org.liezi.base.SuperEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.liezi.base.SuperEntity;
 
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-05
+ * @date: 2019-03-13
  * @description:菜单管理实体类
  */
 @TableName("system_menu")
@@ -15,11 +15,11 @@ public class Menu extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private Long menuId;
     /**
      * 父菜单ID，一级菜单为0
      */
-    private String parentId;
+    private Long parentId;
     /**
      * 菜单名称
      */
@@ -46,19 +46,19 @@ public class Menu extends SuperEntity implements Serializable{
     private Integer orderNum;
 
 
-    public String getId() {
-        return id;
+    public Long getMenuId() {
+        return menuId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -113,7 +113,7 @@ public class Menu extends SuperEntity implements Serializable{
     @Override
     public String toString() {
         return "Menu{" +
-        ", id=" + id +
+        ", menuId=" + menuId +
         ", parentId=" + parentId +
         ", name=" + name +
         ", url=" + url +

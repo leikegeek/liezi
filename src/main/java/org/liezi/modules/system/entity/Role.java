@@ -1,13 +1,13 @@
 package org.liezi.modules.system.entity;
 
-import org.liezi.base.SuperEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.liezi.base.SuperEntity;
 
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-05
+ * @date: 2019-03-13
  * @description:角色实体类
  */
 @TableName("system_role")
@@ -15,7 +15,7 @@ public class Role extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private Long roleId;
     /**
      * 角色名称
      */
@@ -26,12 +26,12 @@ public class Role extends SuperEntity implements Serializable{
     private String remark;
 
 
-    public String getId() {
-        return id;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getRoleName() {
@@ -53,7 +53,7 @@ public class Role extends SuperEntity implements Serializable{
     @Override
     public String toString() {
         return "Role{" +
-        ", id=" + id +
+        ", roleId=" + roleId +
         ", roleName=" + roleName +
         ", remark=" + remark +
         "}";

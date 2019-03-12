@@ -4,11 +4,11 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.liezi.modules.system.entity.Menu">
-        <id column="id" property="id" />
-    <result column="create_by" property="createBy" />
-    <result column="update_by" property="updateBy" />
+        <id column="menu_id" property="menuId" />
     <result column="create_dt" property="createDt" />
     <result column="update_dt" property="updateDt" />
+    <result column="create_by" property="createBy" />
+    <result column="update_by" property="updateBy" />
     <result column="delete_flag" property="deleteFlag" />
         <result column="parent_id" property="parentId" />
         <result column="name" property="name" />
@@ -21,12 +21,12 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        create_by,
-        update_by,
         create_dt,
         update_dt,
+        create_by,
+        update_by,
         delete_flag,
-        id, parent_id, name, url, perms, type, icon, order_num
+        menu_id, parent_id, name, url, perms, type, icon, order_num
     </sql>
 
 </mapper>

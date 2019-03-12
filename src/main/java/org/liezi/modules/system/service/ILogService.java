@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 /**
  *
  * @author: lake.lei
- * @date: 2019-02-27
+ * @date: 2019-03-13
  * @description:系统日志 Service层
  */
 public interface ILogService extends IService<Log> {
