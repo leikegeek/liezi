@@ -62,7 +62,7 @@ public class ScheduleLogController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        scheduleLog.setId(generatorIDService.generatorStringID());
+        scheduleLog.setLogId(generatorIDService.generatorLongID());
         addFlag = scheduleLogService.save(scheduleLog);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,scheduleLog);

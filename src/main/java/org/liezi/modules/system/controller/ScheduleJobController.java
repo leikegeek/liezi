@@ -61,7 +61,7 @@ public class ScheduleJobController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        scheduleJob.setId(generatorIDService.generatorStringID());
+        scheduleJob.setJobId(generatorIDService.generatorLongID());
         addFlag = scheduleJobService.saveJob(scheduleJob);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,scheduleJob);
@@ -136,7 +136,7 @@ public class ScheduleJobController {
      */
     @PostMapping("/run")
     @ResponseBody
-    public ReturnEntity run(@RequestBody String[] jobIds){
+    public ReturnEntity run(@RequestBody Long[] jobIds){
         scheduleJobService.run(jobIds);
         return ResultObject.success(ReturnEntity.OPERATION_SUCCESS,"执行成功");
     }
@@ -146,7 +146,7 @@ public class ScheduleJobController {
      */
     @PostMapping("/pause")
     @ResponseBody
-    public ReturnEntity pause(@RequestBody String[] jobIds){
+    public ReturnEntity pause(@RequestBody Long[] jobIds){
         scheduleJobService.pause(jobIds);
         return ResultObject.success(ReturnEntity.OPERATION_SUCCESS,"暂停成功");
     }
@@ -156,7 +156,7 @@ public class ScheduleJobController {
      */
     @PostMapping("/resume")
     @ResponseBody
-    public ReturnEntity resume(@RequestBody String[] jobIds){
+    public ReturnEntity resume(@RequestBody Long[] jobIds){
         scheduleJobService.resume(jobIds);
         return ResultObject.success(ReturnEntity.OPERATION_SUCCESS,"恢复成功");
     }

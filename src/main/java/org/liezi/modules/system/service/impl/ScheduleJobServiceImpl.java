@@ -8,6 +8,7 @@ import org.liezi.quartz.ScheduleUtils;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @Service
 public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, ScheduleJob> implements IScheduleJobService {
+    @Qualifier("schedulerFactoryBean")
     @Autowired
     private Scheduler scheduler;
     /**
@@ -32,7 +34,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
     public void init(){
         List<ScheduleJob> scheduleJobList = this.list(null);
         for(ScheduleJob scheduleJob : scheduleJobList){
-            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getId());
+            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getJobId());
             //如果不存在，则创建
             if(cronTrigger == null) {
                 ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
@@ -60,8 +62,8 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBatchJob(String[] jobIds) {
-        for(String jobId : jobIds){
+    public void deleteBatchJob(Long[] jobIds) {
+        for(Long jobId : jobIds){
             ScheduleUtils.deleteScheduleJob(scheduler, jobId);
         }
         //删除数据
@@ -76,27 +78,27 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
      * @return: int
      */
     @Override
-    public int updateBatchJob(String[] jobIds, int status) {
+    public int updateBatchJob(Long[] jobIds, int status) {
         return 0;
     }
 
     @Override
-    public void run(String[] jobIds) {
-        for(String jobId : jobIds){
+    public void run(Long[] jobIds) {
+        for(Long jobId : jobIds){
             ScheduleUtils.run(scheduler, this.getById(jobId));
         }
     }
 
     @Override
-    public void pause(String[] jobIds) {
-        for(String jobId : jobIds){
+    public void pause(Long[] jobIds) {
+        for(Long jobId : jobIds){
             ScheduleUtils.pauseJob(scheduler,jobId);
         }
     }
 
     @Override
-    public void resume(String[] jobIds) {
-        for(String jobId : jobIds){
+    public void resume(Long[] jobIds) {
+        for(Long jobId : jobIds){
             ScheduleUtils.resumeJob(scheduler,jobId);
         }
     }

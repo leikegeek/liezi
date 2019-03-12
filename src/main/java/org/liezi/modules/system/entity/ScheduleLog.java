@@ -2,24 +2,25 @@ package org.liezi.modules.system.entity;
 
 import org.liezi.base.SuperEntity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author: lake.lei
  * @date: 2019-03-01
  * @description:定时任务日志实体类
  */
-public class ScheduleLog extends SuperEntity {
+public class ScheduleLog extends SuperEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     /**
      * 任务日志id
      */
-    private String id;
+    private Long logId;
     /**
      * 任务id
      */
-    private String jobId;
+    private Long jobId;
     /**
      * spring bean名称
      */
@@ -45,20 +46,19 @@ public class ScheduleLog extends SuperEntity {
      */
     private Integer times;
 
-
-    public String getId() {
-        return id;
+    public Long getLogId() {
+        return logId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setLogId(Long logId) {
+        this.logId = logId;
     }
 
-    public String getJobId() {
+    public Long getJobId() {
         return jobId;
     }
 
-    public void setJobId(String jobId) {
+    public void setJobId(Long jobId) {
         this.jobId = jobId;
     }
 
@@ -113,14 +113,14 @@ public class ScheduleLog extends SuperEntity {
     @Override
     public String toString() {
         return "ScheduleLog{" +
-        ", id=" + id +
-        ", jobId=" + jobId +
-        ", beanName=" + beanName +
-        ", methodName=" + methodName +
-        ", params=" + params +
-        ", status=" + status +
-        ", error=" + error +
-        ", times=" + times +
-        "}";
+                "logId='" + logId + '\'' +
+                ", jobId='" + jobId + '\'' +
+                ", beanName='" + beanName + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", params='" + params + '\'' +
+                ", status=" + status +
+                ", error='" + error + '\'' +
+                ", times=" + times +
+                '}';
     }
 }
