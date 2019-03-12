@@ -55,7 +55,7 @@ public class ${table.controllerName} {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        ${table.entityPath}.setId(generatorIDService.generatorStringID());
+        ${table.entityPath}.set${entity}Id(generatorIDService.generatorLongID());
         addFlag = ${table.entityPath}Service.save(${table.entityPath});
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,${table.entityPath});
