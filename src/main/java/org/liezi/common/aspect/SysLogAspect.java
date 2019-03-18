@@ -9,12 +9,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
 import org.liezi.common.annotation.LogFiled;
 import org.liezi.common.annotation.SysLog;
 import org.liezi.common.utils.HttpContextUtils;
 import org.liezi.common.utils.IPAddressUtil;
-import org.liezi.common.utils.StringUtils;
 import org.liezi.common.utils.SystemConstants;
 import org.liezi.modules.common.service.IGeneratorIDService;
 import org.liezi.modules.system.entity.Log;
@@ -51,15 +51,21 @@ public class SysLogAspect {
 	public Object around(ProceedingJoinPoint point) throws Throwable {
 		long beginTime = System.currentTimeMillis();
 		//执行方法
-		Object result = point.proceed();
+        Object result = new Object();
+        String exceptionMsg = new String();
+        try{
+            result = point.proceed();
+        }catch (Exception e){
+            exceptionMsg = e.getMessage();
+        }
 		//执行时长(毫秒)
 		long time = System.currentTimeMillis() - beginTime;
 		//保存日志
-		saveSysLog(point, time);
+		saveSysLog(point, time,result,exceptionMsg);
 		return result;
 	}
 
-	private void saveSysLog(ProceedingJoinPoint joinPoint, long time) {
+	private void saveSysLog(ProceedingJoinPoint joinPoint, long time,Object returnObject,String exceptionMsg) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 
@@ -99,17 +105,15 @@ public class SysLogAspect {
 		}catch (Exception e){
 			logger.error(e.toString());
 		}
-		//返回值
-		Object returnObject = new Object();
-		try {
-			returnObject = joinPoint.proceed();
-		} catch (Throwable throwable) {
-			throwable.printStackTrace();
-		}
+		//返回值,切记不可多次调用point.proceed()方法获取返回值,多次调用会导致被切方法重复执行
 		if(null != returnObject){
-			ReturnEntity returnEntity = (ReturnEntity) returnObject;
-			//设置请求状态及返回信息
-			returnArgsHandler(returnEntity,log);
+            ReturnEntity returnEntity;
+            try{
+                returnEntity =  (ReturnEntity) returnObject;
+            }catch (ClassCastException e){
+                returnEntity = ResultObject.systemError(exceptionMsg);
+            }
+            returnArgsHandler(returnEntity,log);
 		}else{
 			//默认请求正常
             log.setRequestStatus(1);
@@ -118,9 +122,6 @@ public class SysLogAspect {
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
 		//设置IP地址
         log.setIp(IPAddressUtil.getIpAddr(request));
-		//用户名
-		String username = StringUtils.currentAccount();
-        log.setUsername(username);
         log.setTime(time);
         log.setCreateDt(new Date());
         log.setLogId(generatorIDService.generatorLongID());

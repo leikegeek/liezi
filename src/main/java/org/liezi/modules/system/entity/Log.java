@@ -16,10 +16,6 @@ public class Log extends SuperEntity implements Serializable{
 
     private Long logId;
     /**
-     * 用户名
-     */
-    private String username;
-    /**
      * 用户操作
      */
     private String operation;
@@ -55,14 +51,6 @@ public class Log extends SuperEntity implements Serializable{
 
     public void setLogId(Long logId) {
         this.logId = logId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getOperation() {
@@ -124,15 +112,14 @@ public class Log extends SuperEntity implements Serializable{
     @Override
     public String toString() {
         return "Log{" +
-        ", logId=" + logId +
-        ", username=" + username +
-        ", operation=" + operation +
-        ", method=" + method +
-        ", params=" + params +
-        ", time=" + time +
-        ", returnMessage=" + returnMessage +
-        ", requestStatus=" + requestStatus +
-        ", ip=" + ip +
-        "}";
+                "logId=" + logId +
+                ", operation='" + operation + '\'' +
+                ", method='" + method + '\'' +
+                ", params='" + params + '\'' +
+                ", time=" + time +
+                ", returnMessage='" + returnMessage + '\'' +
+                ", requestStatus=" + requestStatus +
+                ", ip='" + ip + '\'' +
+                '}';
     }
 }

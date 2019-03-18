@@ -43,6 +43,7 @@ public class ConfigController {
   @Autowired
   private IGeneratorIDService generatorIDService;
 
+    @SysLog("新增配置")
     @ApiOperation(value = "新增系统配置信息表", notes = "新增系统配置信息表")
     @ApiImplicitParams({
       @ApiImplicitParam(paramType = "query",name = "paramKey", value = "key", dataType ="String"),
@@ -50,7 +51,6 @@ public class ConfigController {
       @ApiImplicitParam(paramType = "query",name = "status", value = "状态   0：隐藏   1：显示", dataType ="Integer"),
       @ApiImplicitParam(paramType = "query",name = "remark", value = "备注", dataType ="String"),
     })
-    @SysLog
     @PostMapping("/add")
     @ResponseBody
     public ReturnEntity add(@RequestBody @Validated(value= ValidatorAddGroup.class) Config config, BindingResult result){
@@ -69,7 +69,7 @@ public class ConfigController {
         }
 
     }
-    @SysLog
+    @SysLog("更新配置")
     @ApiOperation(value = "更新系统配置信息表", notes = "更新系统配置信息表")
     @PostMapping("/update")
     @ResponseBody
@@ -87,7 +87,6 @@ public class ConfigController {
             return ResultObject.error(ReturnEntity.UPDATE_FAIL_MSG,null);
         }
     }
-
     @ApiOperation(value = "分页查询系统配置信息表", notes = "分页查询系统配置信息表")
     @PostMapping("/find")
     @ResponseBody
