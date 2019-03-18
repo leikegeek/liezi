@@ -2,12 +2,11 @@ package org.liezi.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.liezi.base.SuperEntity;
-
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-13
+ * @date: 2019-03-18
  * @description:系统日志实体类
  */
 @TableName("system_log")
@@ -36,6 +35,14 @@ public class Log extends SuperEntity implements Serializable{
      * 执行时长(毫秒)
      */
     private Long time;
+    /**
+     * 返回信息
+     */
+    private String returnMessage;
+    /**
+     * 请求状态 1 成功 0 失败
+     */
+    private Integer requestStatus;
     /**
      * IP地址
      */
@@ -90,6 +97,22 @@ public class Log extends SuperEntity implements Serializable{
         this.time = time;
     }
 
+    public String getReturnMessage() {
+        return returnMessage;
+    }
+
+    public void setReturnMessage(String returnMessage) {
+        this.returnMessage = returnMessage;
+    }
+
+    public Integer getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(Integer requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
     public String getIp() {
         return ip;
     }
@@ -107,6 +130,8 @@ public class Log extends SuperEntity implements Serializable{
         ", method=" + method +
         ", params=" + params +
         ", time=" + time +
+        ", returnMessage=" + returnMessage +
+        ", requestStatus=" + requestStatus +
         ", ip=" + ip +
         "}";
     }

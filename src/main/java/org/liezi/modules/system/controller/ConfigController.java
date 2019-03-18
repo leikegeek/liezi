@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
+import org.liezi.common.annotation.SysLog;
 import org.liezi.common.utils.StringUtils;
 import org.liezi.common.validator.ValidatorAddGroup;
 import org.liezi.common.validator.ValidatorPageGroup;
@@ -49,6 +50,7 @@ public class ConfigController {
       @ApiImplicitParam(paramType = "query",name = "status", value = "状态   0：隐藏   1：显示", dataType ="Integer"),
       @ApiImplicitParam(paramType = "query",name = "remark", value = "备注", dataType ="String"),
     })
+    @SysLog
     @PostMapping("/add")
     @ResponseBody
     public ReturnEntity add(@RequestBody @Validated(value= ValidatorAddGroup.class) Config config, BindingResult result){
@@ -67,7 +69,7 @@ public class ConfigController {
         }
 
     }
-
+    @SysLog
     @ApiOperation(value = "更新系统配置信息表", notes = "更新系统配置信息表")
     @PostMapping("/update")
     @ResponseBody

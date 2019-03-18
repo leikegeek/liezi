@@ -15,6 +15,8 @@
         <result column="method" property="method" />
         <result column="params" property="params" />
         <result column="time" property="time" />
+        <result column="return_message" property="returnMessage" />
+        <result column="request_status" property="requestStatus" />
         <result column="ip" property="ip" />
     </resultMap>
 
@@ -25,7 +27,7 @@
         create_by,
         update_by,
         delete_flag,
-        log_id, username, operation, method, params, time, ip
+        log_id, username, operation, method, params, time, return_message, request_status, ip
     </sql>
 
 </mapper>
