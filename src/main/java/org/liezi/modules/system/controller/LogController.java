@@ -62,7 +62,7 @@ public class LogController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        log.setLogId(generatorIDService.generatorLongID());
+        log.setLogId(generatorIDService.generatorStringID());
         addFlag = logService.save(log);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,log);

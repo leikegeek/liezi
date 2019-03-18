@@ -15,7 +15,7 @@ public class Role extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private Long roleId;
+    private String roleId;
     /**
      * 角色名称
      */
@@ -25,12 +25,11 @@ public class Role extends SuperEntity implements Serializable{
      */
     private String remark;
 
-
-    public Long getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 

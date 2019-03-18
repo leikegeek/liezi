@@ -124,7 +124,7 @@ public class SysLogAspect {
         log.setIp(IPAddressUtil.getIpAddr(request));
         log.setTime(time);
         log.setCreateDt(new Date());
-        log.setLogId(generatorIDService.generatorLongID());
+        log.setLogId(generatorIDService.generatorStringID());
 		//保存系统日志
 		logService.save(log);
 	}

@@ -9,7 +9,6 @@ import org.liezi.modules.system.entity.ScheduleJob;
 import org.liezi.modules.system.entity.ScheduleLog;
 import org.liezi.modules.system.service.IScheduleLogService;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.Date;
@@ -28,7 +27,7 @@ public class QuartzJob extends QuartzJobBean {
 	private ExecutorService service = Executors.newSingleThreadExecutor();
 
     @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext context) {
         ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap()
         		.get(ScheduleJob.JOB_PARAM_KEY);
         //获取spring bean
@@ -40,7 +39,7 @@ public class QuartzJob extends QuartzJobBean {
         log.setMethodName(scheduleJob.getMethodName());
         log.setParams(scheduleJob.getParams());
         log.setCreateDt(new Date());
-        log.setLogId(generatorIDService.generatorLongID());
+        log.setLogId(generatorIDService.generatorStringID());
         //任务开始时间
         long startTime = System.currentTimeMillis();
         try {

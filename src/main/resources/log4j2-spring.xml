@@ -55,7 +55,7 @@
         <logger name="org.mybatis" level="INFO">
         </logger>
         <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
-        <logger name="org.liezi.modules.*" level="debug" additivity="false">
+        <logger name="org.liezi.modules.system.dao" level="debug" additivity="false">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
         </logger>

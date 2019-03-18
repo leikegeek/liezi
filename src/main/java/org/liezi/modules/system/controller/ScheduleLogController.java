@@ -10,7 +10,6 @@ import org.liezi.base.ReturnEntity;
 import org.liezi.common.utils.StringUtils;
 import org.liezi.common.validator.ValidatorPageGroup;
 import org.liezi.common.validator.ValidatorUpdateGroup;
-import org.liezi.modules.common.service.IGeneratorIDService;
 import org.liezi.modules.system.entity.ScheduleLog;
 import org.liezi.modules.system.service.IScheduleLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,6 @@ public class ScheduleLogController {
 
   @Autowired
   private IScheduleLogService scheduleLogService;
-  @Autowired
-  private IGeneratorIDService generatorIDService;
 
 
     @ApiOperation(value = "更新定时任务日志", notes = "更新定时任务日志")

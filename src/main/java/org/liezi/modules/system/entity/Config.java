@@ -1,7 +1,9 @@
 package org.liezi.modules.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.liezi.base.SuperEntity;
+
 import java.io.Serializable;
 /**
  *
@@ -13,8 +15,8 @@ import java.io.Serializable;
 public class Config extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
-
-    private Long configId;
+    @TableId("config_id")
+    private String configId;
     /**
      * key
      */
@@ -32,12 +34,11 @@ public class Config extends SuperEntity implements Serializable{
      */
     private String remark;
 
-
-    public Long getConfigId() {
+    public String getConfigId() {
         return configId;
     }
 
-    public void setConfigId(Long configId) {
+    public void setConfigId(String configId) {
         this.configId = configId;
     }
 

@@ -56,7 +56,7 @@ public class RoleController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        role.setRoleId(generatorIDService.generatorLongID());
+        role.setRoleId(generatorIDService.generatorStringID());
         addFlag = roleService.save(role);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,role);
@@ -94,7 +94,7 @@ public class RoleController {
             }
         }
         IPage<Role> roleList=roleService.page(
-            new Page<Role>(role.getCurrent(), role.getSize()),
+            new Page<>(role.getCurrent(), role.getSize()),
             new QueryWrapper<Role>()
             .orderByDesc(true, StringUtils.entityFieldToDB(role.getDescs()))
             .orderByAsc(true,StringUtils.entityFieldToDB(role.getAscs()))

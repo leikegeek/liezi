@@ -33,7 +33,7 @@ public interface IScheduleJobService extends IService<ScheduleJob> {
      * @date: 2019/3/1 11:36
      * @return: void
      */
-    void deleteBatchJob(Long[] jobIds);
+    void deleteBatchJob(String[] jobIds);
     /**
      * 批量更新定时任务状态
      * @param jobIds 任务ID
@@ -41,7 +41,7 @@ public interface IScheduleJobService extends IService<ScheduleJob> {
      * @date: 2019/3/1 11:36
      * @return: void
      */
-    int updateBatchJob(Long[] jobIds, int status);
+    int updateBatchJob(String[] jobIds, int status);
 
     /**
      * 立即执行任务
@@ -50,7 +50,7 @@ public interface IScheduleJobService extends IService<ScheduleJob> {
      * @date: 2019/3/1 11:36
      * @return: void
      */
-    void run(Long[] jobIds);
+    void run(String[] jobIds);
     /**
      * 暂停任务
      * @param jobIds 任务ID
@@ -58,7 +58,7 @@ public interface IScheduleJobService extends IService<ScheduleJob> {
      * @date: 2019/3/1 11:37
      * @return: void
      */
-    void pause(Long[] jobIds);
+    void pause(String[] jobIds);
     /**
      * 恢复运行
      * @param jobIds 任务ID
@@ -66,6 +66,6 @@ public interface IScheduleJobService extends IService<ScheduleJob> {
      * @date: 2019/3/1 11:37
      * @return: void
      */
-    void resume(Long[] jobIds);
+    void resume(String[] jobIds);
 
 }

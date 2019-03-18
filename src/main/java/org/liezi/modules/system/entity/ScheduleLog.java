@@ -16,11 +16,11 @@ public class ScheduleLog extends SuperEntity implements Serializable {
     /**
      * 任务日志id
      */
-    private Long logId;
+    private String logId;
     /**
      * 任务id
      */
-    private Long jobId;
+    private String jobId;
     /**
      * spring bean名称
      */
@@ -46,19 +46,19 @@ public class ScheduleLog extends SuperEntity implements Serializable {
      */
     private Integer times;
 
-    public Long getLogId() {
+    public String getLogId() {
         return logId;
     }
 
-    public void setLogId(Long logId) {
+    public void setLogId(String logId) {
         this.logId = logId;
     }
 
-    public Long getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(Long jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 

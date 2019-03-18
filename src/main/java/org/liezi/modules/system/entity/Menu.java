@@ -15,11 +15,11 @@ public class Menu extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private Long menuId;
+    private String menuId;
     /**
      * 父菜单ID，一级菜单为0
      */
-    private Long parentId;
+    private String parentId;
     /**
      * 菜单名称
      */
@@ -44,23 +44,6 @@ public class Menu extends SuperEntity implements Serializable{
      * 排序
      */
     private Integer orderNum;
-
-
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
 
     public String getName() {
         return name;
@@ -108,6 +91,22 @@ public class Menu extends SuperEntity implements Serializable{
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     @Override

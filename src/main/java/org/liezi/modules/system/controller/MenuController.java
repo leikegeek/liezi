@@ -61,7 +61,7 @@ public class MenuController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        menu.setMenuId(generatorIDService.generatorLongID());
+        menu.setMenuId(generatorIDService.generatorStringID());
         addFlag = menuService.save(menu);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,menu);
@@ -99,7 +99,7 @@ public class MenuController {
             }
         }
         IPage<Menu> menuList=menuService.page(
-            new Page<Menu>(menu.getCurrent(), menu.getSize()),
+            new Page<>(menu.getCurrent(), menu.getSize()),
             new QueryWrapper<Menu>()
             .orderByDesc(true, StringUtils.entityFieldToDB(menu.getDescs()))
             .orderByAsc(true,StringUtils.entityFieldToDB(menu.getAscs()))

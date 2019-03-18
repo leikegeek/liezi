@@ -14,7 +14,7 @@ public class Log extends SuperEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private Long logId;
+    private String logId;
     /**
      * 用户操作
      */
@@ -44,12 +44,11 @@ public class Log extends SuperEntity implements Serializable{
      */
     private String ip;
 
-
-    public Long getLogId() {
+    public String getLogId() {
         return logId;
     }
 
-    public void setLogId(Long logId) {
+    public void setLogId(String logId) {
         this.logId = logId;
     }
 
@@ -112,7 +111,7 @@ public class Log extends SuperEntity implements Serializable{
     @Override
     public String toString() {
         return "Log{" +
-                "logId=" + logId +
+                "logId='" + logId + '\'' +
                 ", operation='" + operation + '\'' +
                 ", method='" + method + '\'' +
                 ", params='" + params + '\'' +

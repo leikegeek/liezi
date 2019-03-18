@@ -60,7 +60,7 @@ public class UserController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        user.setUserId(generatorIDService.generatorLongID());
+        user.setUserId(generatorIDService.generatorStringID());
         addFlag = userService.save(user);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,user);
@@ -98,7 +98,7 @@ public class UserController {
             }
         }
         IPage<User> userList=userService.page(
-            new Page<User>(user.getCurrent(), user.getSize()),
+            new Page<>(user.getCurrent(), user.getSize()),
             new QueryWrapper<User>()
             .orderByDesc(true, StringUtils.entityFieldToDB(user.getDescs()))
             .orderByAsc(true,StringUtils.entityFieldToDB(user.getAscs()))

@@ -20,7 +20,7 @@ public class ScheduleJob extends SuperEntity implements Serializable {
     /**
      * 任务id
      */
-    private Long jobId;
+    private String jobId;
     /**
      * spring bean名称
      */
@@ -50,11 +50,11 @@ public class ScheduleJob extends SuperEntity implements Serializable {
      */
     private String remark;
 
-    public Long getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(Long jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 

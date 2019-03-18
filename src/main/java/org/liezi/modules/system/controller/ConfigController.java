@@ -60,7 +60,7 @@ public class ConfigController {
                return ResultObject.warning(error.getDefaultMessage(),null);
             }
         }
-        config.setConfigId(generatorIDService.generatorLongID());
+        config.setConfigId(generatorIDService.generatorStringID());
         addFlag = configService.save(config);
         if(addFlag){
              return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,config);
@@ -97,7 +97,7 @@ public class ConfigController {
             }
         }
         IPage<Config> configList=configService.page(
-            new Page<Config>(config.getCurrent(), config.getSize()),
+            new Page<>(config.getCurrent(), config.getSize()),
             new QueryWrapper<Config>()
             .orderByDesc(true, StringUtils.entityFieldToDB(config.getDescs()))
             .orderByAsc(true,StringUtils.entityFieldToDB(config.getAscs()))
