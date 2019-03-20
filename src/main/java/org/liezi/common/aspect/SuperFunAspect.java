@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.liezi.base.ResultObject;
@@ -20,6 +21,9 @@ import org.liezi.modules.common.service.IGeneratorIDService;
 import org.liezi.modules.system.entity.Log;
 import org.liezi.modules.system.service.ILogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -31,6 +35,8 @@ import java.util.Date;
  * @description: 超级切面
  * @date 2019/3/20
  */
+@Aspect
+@Component
 public class SuperFunAspect {
     @Autowired
     private ILogService logService;
@@ -62,6 +68,19 @@ public class SuperFunAspect {
         //入参
         Object[] inParams = point.getArgs();
         /**
+         * 数据校验
+         */
+        boolean validationValue = superFun.validationFun();
+        if(validationValue){
+            BindingResult validationResult = (BindingResult) inParams[1];
+            if(validationResult.hasErrors()){
+                for (ObjectError error : validationResult.getAllErrors()) {
+                    return ResultObject.warning(error.getDefaultMessage(),null);
+                }
+            }
+        }
+        //TODO 加密处理
+        /**
          * 执行目标方法
          */
         //返参
@@ -82,6 +101,7 @@ public class SuperFunAspect {
             //保存日志
             saveSysLog(logValue,className,methodName,inParams[0],time,result,exceptionMsg);
         }
+        // TODO 解密处理
         return result;
     }
 
