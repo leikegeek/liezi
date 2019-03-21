@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-18
+ * @date: 2019-03-21
  * @description:系统日志实体类
  */
 @TableName("system_log")
@@ -43,6 +43,7 @@ public class Log extends SuperEntity implements Serializable{
      * IP地址
      */
     private String ip;
+
 
     public String getLogId() {
         return logId;
@@ -111,14 +112,14 @@ public class Log extends SuperEntity implements Serializable{
     @Override
     public String toString() {
         return "Log{" +
-                "logId='" + logId + '\'' +
-                ", operation='" + operation + '\'' +
-                ", method='" + method + '\'' +
-                ", params='" + params + '\'' +
-                ", time=" + time +
-                ", returnMessage='" + returnMessage + '\'' +
-                ", requestStatus=" + requestStatus +
-                ", ip='" + ip + '\'' +
-                '}';
+        ", logId=" + logId +
+        ", operation=" + operation +
+        ", method=" + method +
+        ", params=" + params +
+        ", time=" + time +
+        ", returnMessage=" + returnMessage +
+        ", requestStatus=" + requestStatus +
+        ", ip=" + ip +
+        "}";
     }
 }

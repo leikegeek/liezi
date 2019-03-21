@@ -2,12 +2,11 @@ package org.liezi.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.liezi.base.SuperEntity;
-
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-13
+ * @date: 2019-03-21
  * @description:菜单管理实体类
  */
 @TableName("system_menu")
@@ -44,6 +43,23 @@ public class Menu extends SuperEntity implements Serializable{
      * 排序
      */
     private Integer orderNum;
+
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
     public String getName() {
         return name;
@@ -91,22 +107,6 @@ public class Menu extends SuperEntity implements Serializable{
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
     }
 
     @Override

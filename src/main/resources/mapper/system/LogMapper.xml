@@ -10,7 +10,6 @@
     <result column="create_by" property="createBy" />
     <result column="update_by" property="updateBy" />
     <result column="delete_flag" property="deleteFlag" />
-        <result column="username" property="username" />
         <result column="operation" property="operation" />
         <result column="method" property="method" />
         <result column="params" property="params" />
@@ -27,7 +26,7 @@
         create_by,
         update_by,
         delete_flag,
-        log_id, username, operation, method, params, time, return_message, request_status, ip
+        log_id, operation, method, params, time, return_message, request_status, ip
     </sql>
 
 </mapper>

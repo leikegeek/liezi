@@ -38,92 +38,79 @@ public class ${table.controllerName} {
   @Autowired
   private IGeneratorIDService generatorIDService;
 
-    @ApiOperation(value = "新增${table.comment}", notes = "新增${table.comment}")
-    @ApiImplicitParams({
+  @ApiOperation(value = "新增${table.comment}", notes = "新增${table.comment}")
+  @ApiImplicitParams({
   #foreach($field in ${table.fields})
     #if("$!field.comment" != "")
       @ApiImplicitParam(paramType = "query",name = "${field.propertyName}", value = "${field.comment}", dataType ="${field.propertyType}"),
     #end
   #end
     })
-    @PostMapping("/add")
-    @ResponseBody
-    public ReturnEntity add(@RequestBody @Validated(value=ValidatorAddGroup.class) ${entity} ${table.entityPath}, BindingResult result){
-        boolean addFlag ;
-        if(result.hasErrors()){
-            for (ObjectError error : result.getAllErrors()) {
-               return ResultObject.warning(error.getDefaultMessage(),null);
-            }
-        }
-        ${table.entityPath}.set${entity}Id(generatorIDService.generatorStringID());
-        addFlag = ${table.entityPath}Service.save(${table.entityPath});
-        if(addFlag){
-             return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,${table.entityPath});
-        }else{
-             return ResultObject.error(ReturnEntity.ADD_FAIL_MSG,null);
-        }
+  @SuperFun(logFun = "保存${table.comment}",validationFun = true)
+  @PostMapping("/add")
+  @ResponseBody
+  public ReturnEntity add(@RequestBody @Validated(value=ValidatorAddGroup.class) ${entity} ${table.entityPath}, BindingResult result){
+      boolean addFlag ;
+      ${table.entityPath}.set${entity}Id(generatorIDService.generatorStringID());
+      addFlag = ${table.entityPath}Service.save(${table.entityPath});
+      if(addFlag){
+          return ResultObject.success(ReturnEntity.ADD_SUCCESS_MSG,${table.entityPath});
+      }else{
+          return ResultObject.error(ReturnEntity.ADD_FAIL_MSG,null);
+      }
 
-    }
+  }
 
-    @ApiOperation(value = "更新${table.comment}", notes = "更新${table.comment}")
-    @PostMapping("/update")
-    @ResponseBody
-    public ReturnEntity update(@RequestBody @Validated(value=ValidatorUpdateGroup.class) ${entity} ${table.entityPath}, BindingResult result){
-        boolean updateFlag;
-        if(result.hasErrors()){
-           for (ObjectError error : result.getAllErrors()) {
-              return ResultObject.warning(error.getDefaultMessage(),null);
-           }
-        }
-        updateFlag = ${table.entityPath}Service.updateById(${table.entityPath});
-        if(updateFlag){
-            return ResultObject.success(ReturnEntity.UPDATE_SUCCESS_MSG,${table.entityPath});
-        }else{
-            return ResultObject.error(ReturnEntity.UPDATE_FAIL_MSG,null);
-        }
-    }
+  @ApiOperation(value = "更新${table.comment}", notes = "更新${table.comment}")
+  @SuperFun(logFun = "更新${table.comment}",validationFun = true)
+  @PostMapping("/update")
+  @ResponseBody
+  public ReturnEntity update(@RequestBody @Validated(value=ValidatorUpdateGroup.class) ${entity} ${table.entityPath}, BindingResult result){
+      boolean updateFlag;
+      updateFlag = ${table.entityPath}Service.updateById(${table.entityPath});
+      if(updateFlag){
+          return ResultObject.success(ReturnEntity.UPDATE_SUCCESS_MSG,${table.entityPath});
+      }else{
+          return ResultObject.error(ReturnEntity.UPDATE_FAIL_MSG,null);
+      }
+  }
 
-    @ApiOperation(value = "分页查询${table.comment}", notes = "分页查询${table.comment}")
-    @PostMapping("/find")
-    @ResponseBody
-    public ReturnEntity find(@RequestBody @Validated(value=ValidatorPageGroup.class) ${entity} ${table.entityPath}, BindingResult result){
-        if(result.hasErrors()){
-            for (ObjectError error : result.getAllErrors()) {
-                return ResultObject.warning(error.getDefaultMessage(),null);
-            }
-        }
-        IPage<${entity}> ${table.entityPath}List=${table.entityPath}Service.page(
-            new Page<${entity}>(${table.entityPath}.getCurrent(), ${table.entityPath}.getSize()),
-            new QueryWrapper<${entity}>()
-            .orderByDesc(true,StringUtils.entityFieldToDB(${table.entityPath}.getDescs()))
-            .orderByAsc(true,StringUtils.entityFieldToDB(${table.entityPath}.getAscs()))
-        );
-        return ResultObject.success("success",${table.entityPath}List.getRecords());
-    }
+  @ApiOperation(value = "分页查询${table.comment}", notes = "分页查询${table.comment}")
+  @SuperFun(validationFun = true)
+  @PostMapping("/find")
+  @ResponseBody
+  public ReturnEntity find(@RequestBody @Validated(value=ValidatorPageGroup.class) ${entity} ${table.entityPath}, BindingResult result){
+      IPage<${entity}> ${table.entityPath}List=${table.entityPath}Service.page(
+          new Page<${entity}>(${table.entityPath}.getCurrent(), ${table.entityPath}.getSize()),
+          new QueryWrapper<${entity}>()
+          .orderByDesc(true,StringUtils.entityFieldToDB(${table.entityPath}.getDescs()))
+          .orderByAsc(true,StringUtils.entityFieldToDB(${table.entityPath}.getAscs())));
+      return ResultObject.success("success",${table.entityPath}List.getRecords());
+  }
 
-    @ApiOperation(value = "查询${table.comment}列表", notes = "查询${table.comment}列表")
-    @PostMapping("/list")
-    @ResponseBody
-    public ReturnEntity findList(@RequestBody ${entity} ${table.entityPath}){
-        List<${entity}> ${table.entityPath}List ;
-        ${table.entityPath}List = ${table.entityPath}Service.list(new QueryWrapper<${entity}>()
-            .orderByDesc(true,StringUtils.entityFieldToDB(${table.entityPath}.getDescs()))
-            .orderByAsc(true,StringUtils.entityFieldToDB(${table.entityPath}.getAscs()))
-        );
-        return ResultObject.success("success",${table.entityPath}List);
-    }
+  @ApiOperation(value = "查询${table.comment}列表", notes = "查询${table.comment}列表")
+  @PostMapping("/list")
+  @ResponseBody
+  public ReturnEntity findList(@RequestBody ${entity} ${table.entityPath}){
+      List<${entity}> ${table.entityPath}List ;
+      ${table.entityPath}List = ${table.entityPath}Service.list(new QueryWrapper<${entity}>()
+          .orderByDesc(true,StringUtils.entityFieldToDB(${table.entityPath}.getDescs()))
+          .orderByAsc(true,StringUtils.entityFieldToDB(${table.entityPath}.getAscs())));
+      return ResultObject.success("success",${table.entityPath}List);
+  }
 
-    @ApiOperation(value = "删除${table.comment}", notes = "删除${table.comment}")
-    @PostMapping("/delete")
-    @ResponseBody
-    public ReturnEntity delete(@RequestBody String id){
-        boolean deleteFlag = ${table.entityPath}Service.removeById(id);
-        if(deleteFlag){
-            return ResultObject.success(ReturnEntity.DELETE_SUCCESS_MSG,null);
-        }else{
-            return ResultObject.error(ReturnEntity.DELETE_FAIL_MSG,null);
-        }
-    }
+  @ApiOperation(value = "删除${table.comment}", notes = "删除${table.comment}")
+  @SuperFun(logFun = "删除${table.comment}",validationFun = true)
+  @PostMapping("/delete")
+  @ResponseBody
+  public ReturnEntity delete(@RequestBody String id){
+      boolean deleteFlag = ${table.entityPath}Service.removeById(id);
+      if(deleteFlag){
+          return ResultObject.success(ReturnEntity.DELETE_SUCCESS_MSG,null);
+      }else{
+          return ResultObject.error(ReturnEntity.DELETE_FAIL_MSG,null);
+      }
+  }
 
 }
 

@@ -2,12 +2,11 @@ package org.liezi.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.liezi.base.SuperEntity;
-
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-13
+ * @date: 2019-03-21
  * @description:角色实体类
  */
 @TableName("system_role")
@@ -24,6 +23,7 @@ public class Role extends SuperEntity implements Serializable{
      * 备注
      */
     private String remark;
+
 
     public String getRoleId() {
         return roleId;

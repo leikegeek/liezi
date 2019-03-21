@@ -2,12 +2,11 @@ package org.liezi.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.liezi.base.SuperEntity;
-
 import java.io.Serializable;
 /**
  *
  * @author: lake.lei
- * @date: 2019-03-13
+ * @date: 2019-03-21
  * @description:系统用户实体类
  */
 @TableName("system_user")
@@ -40,6 +39,7 @@ public class User extends SuperEntity implements Serializable{
      * 状态  0：禁用   1：正常
      */
     private Integer status;
+
 
     public String getUserId() {
         return userId;
