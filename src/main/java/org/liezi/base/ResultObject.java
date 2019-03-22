@@ -1,8 +1,5 @@
 package org.liezi.base;
 
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,13 +75,6 @@ public class ResultObject implements Serializable{
             return new ReturnEntity(ReturnEntity.WARNING_CODE, message,returnObject);
         }
     }
-
-    public static ReturnEntity validationMessage(BindingResult result){
-		for (ObjectError error : result.getAllErrors()) {
-			return ResultObject.warning(error.getDefaultMessage(),null);
-		}
-		return null;
-	}
 
 
 }
