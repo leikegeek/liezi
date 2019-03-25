@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
 import org.liezi.common.annotation.SuperFun;
+import org.liezi.common.annotation.utils.AnnotationConstants;
 import org.liezi.common.utils.StringUtils;
 import org.liezi.common.validator.ValidatorAddGroup;
 import org.liezi.common.validator.ValidatorPageGroup;
@@ -51,7 +52,7 @@ public class UserController {
       @ApiImplicitParam(paramType = "query",name = "mobile", value = "手机号", dataType ="String"),
       @ApiImplicitParam(paramType = "query",name = "status", value = "状态  0：禁用   1：正常", dataType ="Integer"),
     })
-  @SuperFun(logFun = "保存系统用户",validationFun = true)
+  @SuperFun(logFun = "保存系统用户",validationFun = true,cryptoFun = AnnotationConstants.CRYPTO_ENC)
   @PostMapping("/add")
   @ResponseBody
   public ReturnEntity add(@RequestBody @Validated(value= ValidatorAddGroup.class) User user, BindingResult result){
@@ -94,6 +95,7 @@ public class UserController {
   }
 
   @ApiOperation(value = "查询系统用户列表", notes = "查询系统用户列表")
+  @SuperFun(cryptoFun = AnnotationConstants.CRYPTO_DEC)
   @PostMapping("/list")
   @ResponseBody
   public ReturnEntity findList(@RequestBody User user){

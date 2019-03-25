@@ -18,5 +18,13 @@ public class AnnotationConstants {
      * 加密&解密
      */
     public static final String CRYPTO = "crypto";
+    /**
+     * 字段CBC模式解密注解
+     */
+    public static final String CBC_DEC = "CBCDecryptor";
+    /**
+     * 字段CBC模式加密注解
+     */
+    public static final String CBC_ENC = "CBCEncryptor";
 
 }

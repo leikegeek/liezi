@@ -2,6 +2,9 @@ package org.liezi.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.liezi.base.SuperEntity;
+import top.zhumang.crypto.annotation.Decryption;
+import top.zhumang.crypto.annotation.Encryption;
+
 import java.io.Serializable;
 /**
  *
@@ -30,6 +33,8 @@ public class User extends SuperEntity implements Serializable{
     /**
      * 邮箱
      */
+    @Decryption(decryptor="CBCDecryptor")
+    @Encryption(encryptor="CBCEncryptor")
     private String email;
     /**
      * 手机号

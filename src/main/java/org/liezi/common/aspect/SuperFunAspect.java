@@ -13,6 +13,7 @@ import org.liezi.base.ResultObject;
 import org.liezi.base.ReturnEntity;
 import org.liezi.common.annotation.LogFiled;
 import org.liezi.common.annotation.SuperFun;
+import org.liezi.common.annotation.utils.AnnotationConstants;
 import org.liezi.common.utils.HttpContextUtils;
 import org.liezi.common.utils.IPAddressUtil;
 import org.liezi.common.utils.StringUtils;
@@ -24,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import top.zhumang.crypto.annotation.AnnotationHandler;
+import top.zhumang.crypto.annotation.DecryptionAnnotationHandlerImpl;
+import top.zhumang.crypto.annotation.EncryptionAnnotationHandlerImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -42,6 +46,8 @@ public class SuperFunAspect {
     private ILogService logService;
     @Autowired
     private IGeneratorIDService generatorIDService;
+    AnnotationHandler encryptor = new EncryptionAnnotationHandlerImpl();
+    AnnotationHandler decryptor = new DecryptionAnnotationHandlerImpl();
 
     private Logger logger = LogManager.getLogger(SuperFunAspect.class);
 
@@ -67,6 +73,7 @@ public class SuperFunAspect {
         SuperFun superFun = method.getAnnotation(SuperFun.class);
         //入参
         Object[] inParams = point.getArgs();
+        Object requstBody = inParams[0];
         /**
          * 数据校验
          */
@@ -79,7 +86,14 @@ public class SuperFunAspect {
                 }
             }
         }
-        //TODO 加密处理
+        /**
+         * 加密处理
+         */
+        String cryptoValue = superFun.cryptoFun();
+        boolean encFlag = StringUtils.isNotBlank(cryptoValue) && (cryptoValue.equals(AnnotationConstants.CRYPTO_ENC) || cryptoValue.equals(AnnotationConstants.CRYPTO));
+        if(encFlag){
+            encryptor.handle(requstBody);
+        }
         /**
          * 执行目标方法
          */
@@ -91,6 +105,12 @@ public class SuperFunAspect {
         }catch (Exception e){
             exceptionMsg = e.getMessage();
         }
+        ReturnEntity returnEntity;
+        try{
+            returnEntity =  (ReturnEntity) result;
+        }catch (ClassCastException e){
+            returnEntity = ResultObject.systemError(exceptionMsg);
+        }
         /**
          * 保存日志
          */
@@ -99,13 +119,20 @@ public class SuperFunAspect {
             //执行时长(毫秒)
             long time = System.currentTimeMillis() - beginTime;
             //保存日志
-            saveSysLog(logValue,className,methodName,inParams[0],time,result,exceptionMsg);
+            saveSysLog(logValue,className,methodName,requstBody,time,returnEntity,exceptionMsg);
         }
-        // TODO 解密处理
+        /**
+         * 解密处理
+         */
+        boolean decFlag = StringUtils.isNotBlank(cryptoValue) && (cryptoValue.equals(AnnotationConstants.CRYPTO_DEC) || cryptoValue.equals(AnnotationConstants.CRYPTO));
+        if(decFlag){
+            Object objectResult = returnEntity.getDatas();
+            decryptor.handle(objectResult);
+        }
         return result;
     }
 
-    private void saveSysLog(String logDescr,String className,String methodName, Object object,long time,Object returnObject,String exceptionMsg) {
+    private void saveSysLog(String logDescr,String className,String methodName, Object object,long time,ReturnEntity returnObject,String exceptionMsg) {
         Log log = new Log();
         log.setOperation(logDescr);
         log.setMethod(className + "." + methodName + "()");
@@ -133,13 +160,7 @@ public class SuperFunAspect {
         }
         //返回值,切记不可多次调用point.proceed()方法获取返回值,多次调用会导致被切方法重复执行
         if(null != returnObject){
-            ReturnEntity returnEntity;
-            try{
-                returnEntity =  (ReturnEntity) returnObject;
-            }catch (ClassCastException e){
-                returnEntity = ResultObject.systemError(exceptionMsg);
-            }
-            returnArgsHandler(returnEntity,log);
+            returnArgsHandler(returnObject,log);
         }else{
             //默认请求正常
             log.setRequestStatus(1);

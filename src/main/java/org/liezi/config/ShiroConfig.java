@@ -52,9 +52,10 @@ public class ShiroConfig {
         filters.put("oauth2", new Oauth2Filter());
         shiroFilter.setFilters(filters);
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/api/login", "anon");
-        filterMap.put("/api/logout", "anon");
-        filterMap.put("/api/config/**", "anon");
+//        filterMap.put("/api/login", "anon");
+//        filterMap.put("/api/logout", "anon");
+//        filterMap.put("/api/config/**", "anon");
+        filterMap.put("/api/**", "anon");
         filterMap.put("/swagger/**", "anon");
         filterMap.put("/v2/api-docs", "anon");
         filterMap.put("/webjars/**", "anon");

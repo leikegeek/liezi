@@ -36,6 +36,8 @@
         <dava-gateway.version>1.4.1-SNAPSHOT</dava-gateway.version>
         <jwt.version>0.7.0</jwt.version>
         <redis.clients.version>2.9.0</redis.clients.version>
+        <crypto-apache.version>1.0.0</crypto-apache.version>
+        <crypto-lake.version>0.0.1-SNAPSHOT</crypto-lake.version>
     </properties>
 
     <dependencies>
@@ -193,6 +195,16 @@
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-crypto</artifactId>
+            <version>${crypto-apache.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.zhumang</groupId>
+            <artifactId>crypto-util</artifactId>
+            <version>${crypto-lake.version}</version>
         </dependency>
 
     </dependencies>
