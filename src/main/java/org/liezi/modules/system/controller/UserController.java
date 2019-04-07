@@ -27,7 +27,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * @author: lake.lei
  * @date: 2019-03-21
@@ -66,6 +71,16 @@ public class UserController {
       }
 
   }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public Map<String,Object> test(HttpServletRequest request){
+        Map<String,Object> result = new HashMap<>();
+        HttpSession session = request.getSession();
+        session.setAttribute("test","test");
+        result.put("message","登陆成功...");
+        return result;
+    }
 
   @ApiOperation(value = "更新系统用户", notes = "更新系统用户")
   @SuperFun(logFun = "更新系统用户",validationFun = true)

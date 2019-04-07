@@ -1,7 +1,5 @@
 package org.liezi.config;
 
-import org.liezi.modules.system.oauth2.Oauth2Filter;
-import org.liezi.modules.system.oauth2.Oauth2Realm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -9,6 +7,8 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.liezi.modules.system.oauth2.Oauth2Filter;
+import org.liezi.modules.system.oauth2.Oauth2Realm;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,10 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
-
+    /**
+     * 接管了session的管理
+     * @return
+     */
     @Bean("sessionManager")
     public SessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
