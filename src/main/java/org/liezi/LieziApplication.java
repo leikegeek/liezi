@@ -12,11 +12,12 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  * @description:
  */
 @SpringBootApplication
+@EnableRedisHttpSession
 @ComponentScan(basePackages = {"org.liezi.config", "org.liezi.modules.*.controller",
         "org.liezi.modules.*.service", "org.liezi.modules.*.dao", "org.liezi.filter",
         "org.liezi.quartz","org.liezi.quartz.task","org.liezi.common.utils",
-        "org.liezi.modules.system.oauth2","org.liezi.common.aspect","top.zhumang.crypto.common"})
-@EnableRedisHttpSession
+        "org.liezi.modules.system.oauth2","org.liezi.common.aspect",
+        "top.zhumang.crypto.common"})
 public class LieziApplication {
     /**
      * @param args
