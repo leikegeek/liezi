@@ -32,11 +32,11 @@ spring:
         testWhileIdle: true
         testOnBorrow: false
         testOnReturn: false
-        filters: stat,wall,log4j
+        filters: stat,wall,log4j2
     redis:
         host: 127.0.0.1
         port: 6379
-        password:
+        password: xxx
         # 客户端超时时间单位是毫秒 默认是2000
         timeout: 10000
         #最大空闲数
@@ -55,6 +55,10 @@ spring:
         testOnBorrow: true
         #在空闲时检查有效性, 默认false
         testWhileIdle: true
+        database: 1
+    session:
+        redis:
+          namespace: liezi:session
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
@@ -89,8 +93,15 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'
-system-config:
-    worker-id: 1
-    datacenter-id: 1
+liezi:
+    id:
+      worker: 1
+      datacenter: 1
+    cluster: true
+    globalSessionTimeout: 3600
 quartz:
     enabled: true
+# 加密密钥
+keyStr: xxx
+# 偏移量
+ivStr: xxx

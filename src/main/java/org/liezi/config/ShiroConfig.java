@@ -7,9 +7,12 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.liezi.modules.system.oauth2.Oauth2Filter;
 import org.liezi.modules.system.oauth2.Oauth2Realm;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,15 +29,27 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
     /**
-     * 接管了session的管理
-     * @return
+     * 单机环境，session交给shiro管理
      */
-    @Bean("sessionManager")
-    public SessionManager sessionManager(){
+    @Bean
+    @ConditionalOnProperty(prefix = "liezi", name = "cluster", havingValue = "false")
+    public DefaultWebSessionManager sessionManager(@Value("${liezi.globalSessionTimeout:3600}") long globalSessionTimeout){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        sessionManager.setSessionIdCookieEnabled(true);
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        sessionManager.setSessionValidationInterval(globalSessionTimeout * 1000);
+        sessionManager.setGlobalSessionTimeout(globalSessionTimeout * 1000);
+
         return sessionManager;
+    }
+
+    /**
+     * 集群环境，session交给spring-session管理
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "liezi", name = "cluster", havingValue = "true")
+    public ServletContainerSessionManager servletContainerSessionManager() {
+        return new ServletContainerSessionManager();
     }
 
     @Bean("securityManager")
@@ -55,10 +70,10 @@ public class ShiroConfig {
         filters.put("oauth2", new Oauth2Filter());
         shiroFilter.setFilters(filters);
         Map<String, String> filterMap = new LinkedHashMap<>();
-//        filterMap.put("/api/login", "anon");
-//        filterMap.put("/api/logout", "anon");
-//        filterMap.put("/api/config/**", "anon");
-        filterMap.put("/api/**", "anon");
+        filterMap.put("/api/login", "anon");
+        filterMap.put("/api/logout", "anon");
+        filterMap.put("/api/config/**", "anon");
+        filterMap.put("/api/user/test*", "anon");
         filterMap.put("/swagger/**", "anon");
         filterMap.put("/v2/api-docs", "anon");
         filterMap.put("/webjars/**", "anon");

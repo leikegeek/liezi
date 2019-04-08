@@ -3,7 +3,6 @@ package org.liezi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  *
@@ -12,7 +11,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  * @description:
  */
 @SpringBootApplication
-@EnableRedisHttpSession
 @ComponentScan(basePackages = {"org.liezi.config", "org.liezi.modules.*.controller",
         "org.liezi.modules.*.service", "org.liezi.modules.*.dao", "org.liezi.filter",
         "org.liezi.quartz","org.liezi.quartz.task","org.liezi.common.utils",

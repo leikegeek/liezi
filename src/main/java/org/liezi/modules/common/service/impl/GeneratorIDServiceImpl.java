@@ -16,12 +16,12 @@ public class GeneratorIDServiceImpl implements IGeneratorIDService {
     /**
      * 用于生成ID
      */
-    @Value("${system-config.worker-id:0}")
+    @Value("${liezi.id.worker:0}")
     private Integer workerID;
     /**
      * 用于生成ID
      */
-    @Value("${system-config.datacenter-id:0}")
+    @Value("${liezi.id.datacenter:0}")
     private Integer datacenterID;
 
     private IdWorker idWorker;
