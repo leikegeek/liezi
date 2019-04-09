@@ -20,8 +20,8 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         platform: mysql
         url: jdbc:mysql://127.0.0.1:3306/liezi?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2B8
-        username: xxx
-        password: xxx
+        username: lake
+        password: lake
         initialSize: 5
         minIdle: 5
         maxActive: 20
@@ -36,7 +36,7 @@ spring:
     redis:
         host: 127.0.0.1
         port: 6379
-        password: xxx
+        password: lakegeek
         # 客户端超时时间单位是毫秒 默认是2000
         timeout: 10000
         #最大空闲数
@@ -102,6 +102,6 @@ liezi:
 quartz:
     enabled: true
 # 加密密钥
-keyStr: xxx
+keyStr: dk8nahAcd2xmttZK
 # 偏移量
-ivStr: xxx
+ivStr: IIQ5DA5Gxq3HAnur

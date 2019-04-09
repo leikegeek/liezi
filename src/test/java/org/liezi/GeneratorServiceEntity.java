@@ -29,7 +29,7 @@ public class GeneratorServiceEntity {
     public void generateCode() {
         //user -> UserService, 设置成true: user -> IUserService
         boolean serviceNameStartWithI = true;
-        generateByTables(serviceNameStartWithI, packageName+"."+moduleName, "system_config","system_role","system_menu");
+        generateByTables(serviceNameStartWithI, packageName+"."+moduleName, "system_log","system_config","system_user","system_role","system_menu");
     }
 
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
@@ -46,14 +46,14 @@ public class GeneratorServiceEntity {
         if (!serviceNameStartWithI) {
             config.setServiceName("%sService");
         }
-        String dbUrl = "jdbc:mysql://127.0.0.1:3306/wf_sec?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
+        String dbUrl = "jdbc:mysql://127.0.0.1:3306/liezi?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2B8";
         //数据源配置
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
-                .setUsername("xxx")
-                .setPassword("xxx")
-                .setDriverName("com.mysql.jdbc.Driver");
+                .setUsername("root")
+                .setPassword("lake")
+                .setDriverName("com.mysql.cj.jdbc.Driver");
         //策略配置
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
@@ -62,7 +62,7 @@ public class GeneratorServiceEntity {
                 .setNaming(NamingStrategy.underline_to_camel)//命名方式 驼峰
                 .setInclude(tableNames)
                 .setTablePrefix(new String[] { "system"})//项目DB表前缀
-                .setSuperEntityClass("SuperEntity")//指定实体父类
+                .setSuperEntityClass("org.liezi.base.SuperEntity")//指定实体父类
                 .setSuperEntityColumns(new String[] { "create_dt", "update_dt","create_by","update_by","delete_flag"});//指定公共字段
         //全局配置
         new AutoGenerator().setGlobalConfig(config)
