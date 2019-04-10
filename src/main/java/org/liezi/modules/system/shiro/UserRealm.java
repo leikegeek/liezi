@@ -10,6 +10,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.liezi.modules.common.constants.AppConstants;
 import org.liezi.modules.system.dao.MenuMapper;
 import org.liezi.modules.system.dao.UserMapper;
 import org.liezi.modules.system.entity.Menu;
@@ -43,7 +44,7 @@ public class UserRealm extends AuthorizingRealm {
 		List<String> permsList;
 		
 		//系统管理员，拥有最高权限
-		if(userId == "1"){
+		if(userId.equals(AppConstants.ADMIN_USER)){
 			List<Menu> menuList = menuMapper.selectList(null);
 			permsList = new ArrayList<>(menuList.size());
 			for(Menu menu : menuList){
@@ -72,7 +73,7 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
-			AuthenticationToken authcToken) throws AuthenticationException {
+		AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
 		//查询用户信息
 		User user = userMapper.selectOne(new QueryWrapper<User>().eq("username", token.getUsername()));
