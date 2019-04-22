@@ -7,7 +7,5 @@ package org.liezi.modules.common.constants;
  */
 public class AppConstants {
 
-    public static final String ADMIN_USER = "1110116896453300224";
-
 
 }

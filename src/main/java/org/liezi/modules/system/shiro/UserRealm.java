@@ -10,15 +10,15 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.liezi.modules.common.constants.AppConstants;
-import org.liezi.modules.system.dao.MenuMapper;
 import org.liezi.modules.system.dao.UserMapper;
-import org.liezi.modules.system.entity.Menu;
 import org.liezi.modules.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -30,8 +30,6 @@ import java.util.*;
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private MenuMapper menuMapper;
     
     /**
      * 授权(验证权限时调用)
@@ -40,20 +38,7 @@ public class UserRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		User user = (User)principals.getPrimaryPrincipal();
 		String userId = user.getUserId();
-		
-		List<String> permsList;
-		
-		//系统管理员，拥有最高权限
-		if(userId.equals(AppConstants.ADMIN_USER)){
-			List<Menu> menuList = menuMapper.selectList(null);
-			permsList = new ArrayList<>(menuList.size());
-			for(Menu menu : menuList){
-				permsList.add(menu.getPerms());
-			}
-		}else{
-			permsList = userMapper.queryAllPerms(userId);
-		}
-
+		List<String> permsList = userMapper.queryAllPerms(userId);
 		//用户权限列表
 		Set<String> permsSet = new HashSet<>();
 		for(String perms : permsList){
