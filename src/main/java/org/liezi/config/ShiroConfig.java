@@ -8,8 +8,6 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
-import org.liezi.modules.system.oauth2.Oauth2Filter;
-import org.liezi.modules.system.oauth2.Oauth2Realm;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -67,7 +65,6 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
         //oauth过滤,anon不拦截
         Map<String, Filter> filters = new HashMap<>(15);
-        filters.put("oauth2", new Oauth2Filter());
         shiroFilter.setFilters(filters);
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/api/login", "anon");
