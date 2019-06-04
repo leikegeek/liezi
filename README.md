@@ -18,7 +18,7 @@ liezi是spring boot开发模版.宗旨是解放双手,花更多的时间理解�
 - [x] Hibernate validator
 - [X] 权限&安全
 - [ ] 消息队列
-- [ ] 多数据源
+- [x] 多数据源
 - [ ] RPC
 - [ ] redis
 - [ ] 并发
