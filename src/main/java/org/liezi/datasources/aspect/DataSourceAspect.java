@@ -27,8 +27,8 @@ import java.lang.reflect.Method;
 public class DataSourceAspect {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("@annotation(io.renren.datasource.annotation.DataSource) " +
-            "|| @within(io.renren.datasource.annotation.DataSource)")
+    @Pointcut("@annotation(org.liezi.datasources.annotation.DataSource) " +
+            "|| @within(org.liezi.datasources.annotation.DataSource)")
     public void dataSourcePointCut() {
 
     }

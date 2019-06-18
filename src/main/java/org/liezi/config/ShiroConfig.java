@@ -38,7 +38,6 @@ public class ShiroConfig {
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         sessionManager.setSessionValidationInterval(globalSessionTimeout * 1000);
         sessionManager.setGlobalSessionTimeout(globalSessionTimeout * 1000);
-
         return sessionManager;
     }
 
@@ -77,7 +76,7 @@ public class ShiroConfig {
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/swagger-ui.html", "anon");
         filterMap.put("/swagger-resources/**", "anon");
-        filterMap.put("/**", "oauth2");
+        filterMap.put("/**", "authc");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
     }
