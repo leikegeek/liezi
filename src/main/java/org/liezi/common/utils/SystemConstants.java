@@ -42,6 +42,10 @@ public class SystemConstants {
      * MySQL 字符类型最长[最坏的结果]
      */
     public static final int MAX_VARCHAR = 1000;
+    /**
+     * 使用参数切换数据源标记
+     */
+    public static final String DS_PARAMS = "DS_PARAMS_Y";
 
     /**
      * 定时任务枚举

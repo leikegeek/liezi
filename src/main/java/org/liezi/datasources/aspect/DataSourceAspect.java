@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.liezi.common.utils.SystemConstants;
 import org.liezi.datasources.annotation.DataSource;
 import org.liezi.datasources.config.DynamicContextHolder;
 import org.slf4j.Logger;
@@ -44,11 +45,25 @@ public class DataSourceAspect {
         if(targetDataSource != null || methodDataSource != null){
             String value;
             if(methodDataSource != null){
-                value = methodDataSource.value();
+                String methodValue = methodDataSource.value();
+                //参数取值优先级1
+                if(methodValue.equals(SystemConstants.DS_PARAMS)){
+                    Object[] inParams = point.getArgs();
+                    Object requstBody = inParams[0];
+                    if(requstBody instanceof String  && null != requstBody){
+                        String paramValue = (String)requstBody;
+                        value = paramValue;
+                    }else {
+                        value = methodValue;
+                    }
+                }else{
+                    // 方法注解优先级2
+                    value = methodValue;
+                }
             }else {
+                // 类注解优先级3
                 value = targetDataSource.value();
             }
-
             DynamicContextHolder.push(value);
             logger.debug("set datasource is {}", value);
         }

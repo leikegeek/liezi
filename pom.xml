@@ -33,7 +33,6 @@
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
         <commons.io.version>2.5</commons.io.version>
         <log4j.version>1.2.16</log4j.version>
-        <dava-gateway.version>1.4.1-SNAPSHOT</dava-gateway.version>
         <jwt.version>0.7.0</jwt.version>
         <redis.clients.version>2.9.0</redis.clients.version>
         <crypto-apache.version>1.0.0</crypto-apache.version>
