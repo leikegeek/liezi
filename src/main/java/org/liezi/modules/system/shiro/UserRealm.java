@@ -10,6 +10,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.liezi.common.utils.RedisUtils;
 import org.liezi.modules.system.dao.UserMapper;
 import org.liezi.modules.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ import java.util.Set;
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+	private RedisUtils redisUtils;
     
     /**
      * 授权(验证权限时调用)
@@ -38,16 +41,23 @@ public class UserRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		User user = (User)principals.getPrimaryPrincipal();
 		String userId = user.getUserId();
-		List<String> permsList = userMapper.queryAllPerms(userId);
-		//用户权限列表
 		Set<String> permsSet = new HashSet<>();
-		for(String perms : permsList){
-			if(StringUtils.isBlank(perms)){
-				continue;
+		Set<String>  permissions =  (Set<String>) redisUtils.get("permission_data_"+userId);
+		String permissionFlag = (String)redisUtils.get("permission_flag_"+userId);
+		if((null == permissions || permissions.isEmpty()) && (StringUtils.isNotBlank(permissionFlag) && permissionFlag.equals("Y"))){
+			List<String> permsList = userMapper.queryAllPerms(userId);
+			//用户权限列表
+			for(String perms : permsList){
+				if(StringUtils.isBlank(perms)){
+					continue;
+				}
+				permsSet.addAll(Arrays.asList(perms.trim().split(",")));
 			}
-			permsSet.addAll(Arrays.asList(perms.trim().split(",")));
+			redisUtils.set("permission_data_"+userId,permsSet);
+			redisUtils.set("permission_flag_"+userId,"Y");
+		}else{
+			permsSet = permissions;
 		}
-		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.setStringPermissions(permsSet);
 		return info;
